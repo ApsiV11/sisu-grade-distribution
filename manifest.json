@@ -1,0 +1,49 @@
+{
+    "manifest_version":3,
+    "version":"1.0",
+    "name":"Sisu grade distribution",
+    "description": "An extension for showing the grade distribution for courses in Sisu",
+    "content_scripts": [
+      {
+        "matches": [
+          "https://sisu.aalto.fi/*/valid-attainments",
+          "https://sisu.helsinki.fi/*/valid-attainments",
+          "https://sisu.hanken.fi/*/valid-attainments",
+          "https://sisu.jyu.fi/*/valid-attainments",
+          "https://sisu.lut.fi/*/valid-attainments",
+          "https://sis-tuni.funidata.fi/*/valid-attainments",
+          "https://sisu.tuni.fi/*/valid-attainments",
+          "https://sisu.arcada.fi/*/valid-attainments"
+        ],
+        "js": ["scripts/chart.umd.js", "scripts/inject_chart.js"],
+        "run_at": "document_idle"
+      },
+      {
+        "matches": [
+          "https://sisu.aalto.fi/*/valid-attainments",
+          "https://sisu.helsinki.fi/*/valid-attainments",
+          "https://sisu.hanken.fi/*/valid-attainments",
+          "https://sisu.jyu.fi/*/valid-attainments",
+          "https://sisu.lut.fi/*/valid-attainments",
+          "https://sis-tuni.funidata.fi/*/valid-attainments",
+          "https://sisu.tuni.fi/*/valid-attainments",
+          "https://sisu.arcada.fi/*/valid-attainments"
+        ],
+        "js": ["scripts/injectXHRMod.js"],
+        "run_at": "document_start"
+      }
+    ],
+    "web_accessible_resources": [{
+      "resources": ["scripts/injectXHRMod.js", "scripts/interceptXHR.js"],
+      "matches": [
+        "https://sisu.aalto.fi/*",
+        "https://sisu.helsinki.fi/*",
+        "https://sisu.hanken.fi/*",
+        "https://sisu.jyu.fi/*",
+        "https://sisu.lut.fi/*",
+        "https://sis-tuni.funidata.fi/*",
+        "https://sisu.tuni.fi/*",
+        "https://sisu.arcada.fi/*"
+      ]
+    }]
+}
