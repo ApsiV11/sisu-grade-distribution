@@ -78,5 +78,5 @@ var inject = () => {
         });
     observer.observe(container, {attributes: true});
 }
-  
-pollDOM(inject, ".collapsible-columns-container");
+
+pollDOM(inject, ".collapsible-columns-container")
