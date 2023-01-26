@@ -33,7 +33,7 @@ var sidebarOpen = () => {
 
     pollDOM(() => {}, "#__interceptedData")
     var data = JSON.parse(document.querySelector("#__interceptedData").innerHTML).publicGradeDistribution.gradeCounts
-    console.log(data)
+    console.log("Grade distribution data: " + JSON.stringify(data))
 
     new Chart(
         document.getElementById("public-grade-distribution").getContext('2d'),
@@ -65,6 +65,11 @@ var sidebarOpen = () => {
 }
 var inject = () => {
     var container = document.querySelector(".collapsible-columns-container").children[1]
+
+    //If sidebar is already open when entering page, mutation doesn't happen
+    if(!container.classList.contains('closed')) {
+        pollDOM(sidebarOpen, ".content-row")
+    }
 
     var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {

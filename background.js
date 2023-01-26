@@ -4,6 +4,5 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
             target : {tabId : tabId},
             files : ["scripts/inject_chart.js", "scripts/chart.umd.js"],
         })
-        .then(() => console.log("script injected"));
     }
 })
