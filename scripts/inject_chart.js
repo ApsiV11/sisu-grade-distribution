@@ -8,22 +8,8 @@ var pollDOM = (func, selector) => {
     }
 }
 
-var sidebarOpen = () => {
-    var header = document.querySelector(".header-text")
-
-    var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                observer.disconnect()
-                pollDOM(sidebarOpen, ".content-row")
-            });
-        });
-    observer.observe(header, {characterData: true, subtree: true});
-
-    var contentRow = document.querySelector(".content-row")
-
-    if(document.querySelector("#public-grade-distribution")) {
-        document.querySelector("#public-grade-distribution").parentElement.remove()
-    }
+var injectChart = () => {
+    var contentRow = document.querySelector(".modal-body")
     var div = document.createElement("div")
     var canvas = document.createElement("canvas")
     canvas.id = "public-grade-distribution"
@@ -31,7 +17,6 @@ var sidebarOpen = () => {
     div.appendChild(canvas)
     contentRow.appendChild(div)
 
-    pollDOM(() => {}, "#__interceptedData")
     var data = JSON.parse(document.querySelector("#__interceptedData").innerHTML).publicGradeDistribution.gradeCounts
     console.log("Grade distribution data: " + JSON.stringify(data))
 
@@ -63,25 +48,19 @@ var sidebarOpen = () => {
         }
     );
 }
-var inject = () => {
-    var container = document.querySelector(".collapsible-columns-container").children[1]
 
-    //If sidebar is already open when entering page, mutation doesn't happen
-    if(!container.classList.contains('closed')) {
-        pollDOM(sidebarOpen, ".content-row")
-    }
-
-    var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if(mutation.attributeName == "class"){
-                    var open = !mutation.target.classList.contains('closed');
-                    if(open) {
-                        pollDOM(sidebarOpen, ".content-row")
-                    }
+// Add mutation observer to document to detect when the modal is added to dom
+var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.addedNodes.length) {
+            for(var i = 0; i < mutation.addedNodes.length; i++) {
+                var classList = mutation.addedNodes[i].classList || []
+                if(classList.contains("modal-body")) {
+                    setTimeout(injectChart, 300)
+                    break
                 }
-            });
-        });
-    observer.observe(container, {attributes: true});
-}
-
-pollDOM(inject, ".collapsible-columns-container")
+            }
+        }
+    })
+})
+observer.observe(document, { childList: true, subtree: true })
