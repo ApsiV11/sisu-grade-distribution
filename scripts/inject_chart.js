@@ -52,13 +52,12 @@ var injectChart = () => {
 // Add mutation observer to document to detect when the modal is added to dom
 var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
-        if (mutation.addedNodes.length) {
-            for(var i = 0; i < mutation.addedNodes.length; i++) {
-                var classList = mutation.addedNodes[i].classList || []
-                if(classList.contains("modal-body")) {
-                    setTimeout(injectChart, 300)
-                    break
-                }
+        if (!mutation.addedNodes.length) return
+        for(const node of mutation.addedNodes) {
+            if (!node.tagName) continue // not an element
+            if(node.classList.contains("modal-body")) {
+                setTimeout(injectChart, 300)
+                break
             }
         }
     })
