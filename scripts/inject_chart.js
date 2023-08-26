@@ -14,7 +14,13 @@ var injectChart = () => {
     var canvas = document.createElement("canvas")
     canvas.id = "public-grade-distribution"
     canvas.style.backgroundColor = 'rgba(255,255,255,255)'
+
+    var title = document.createElement("h3")
+    title.innerHTML = "Public grade distribution"
+
+    div.appendChild(title)
     div.appendChild(canvas)
+
     contentRow.appendChild(div)
 
     var data = JSON.parse(document.querySelector("#__interceptedData").innerHTML).publicGradeDistribution.gradeCounts
