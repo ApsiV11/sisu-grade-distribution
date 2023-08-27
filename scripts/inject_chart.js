@@ -75,6 +75,14 @@ var injectChart = async () => {
                     }
                 },
                 plugins: {
+                    title: {
+                        display: true,
+                        text: document.getElementById("attainment-details-heading").innerText,
+                        font: {
+                            size: 20
+                        },
+                        padding: 20
+                    },
                     legend: {
                         display: false
                     },
