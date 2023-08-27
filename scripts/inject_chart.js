@@ -15,10 +15,10 @@ var injectChart = async () => {
     var titleText = lang === "fi" ? "Julkinen arvosanajakauma" : lang === "sv" ? "Publik betygsspridning" : "Public grade distribution"
     title.innerHTML = titleText
 
-    var downloadButton = document.createElement("button")
-    downloadButton.innerHTML = lang === "fi" ? "Lataa CSV" : lang === "sv" ? "Ladda ner CSV" : "Download CSV"
-    downloadButton.style.float = "right"
-    downloadButton.onclick = () => {
+    var downloadCsvButton = document.createElement("button")
+    downloadCsvButton.innerHTML = lang === "fi" ? "Lataa CSV" : lang === "sv" ? "Ladda ner CSV" : "Download CSV"
+    downloadCsvButton.style.float = "right"
+    downloadCsvButton.onclick = () => {
         var data = JSON.parse(document.querySelector("#__interceptedData")?.innerHTML || '{}')?.publicGradeDistribution?.gradeCounts
         var csvData = []
         for(const count of Object.entries(data)) {
@@ -30,7 +30,16 @@ var injectChart = async () => {
         downloadJsonAsCsv(csvData)
     }
 
-    div.appendChild(downloadButton)
+    var downloadPngButton = document.createElement("button")
+    downloadPngButton.innerHTML = lang === "fi" ? "Lataa PNG" : lang === "sv" ? "Ladda ner PNG" : "Download PNG"
+    downloadPngButton.style.float = "right"
+    downloadPngButton.style.marginLeft = "10px"
+    downloadPngButton.onclick = () => {
+        downloadChartAsPng()
+    }
+
+    div.appendChild(downloadPngButton)
+    div.appendChild(downloadCsvButton)
     div.appendChild(title)
     div.appendChild(canvas)
 
@@ -40,7 +49,7 @@ var injectChart = async () => {
     var data = JSON.parse(document.querySelector('#__interceptedData').innerHTML || '{}').publicGradeDistribution.gradeCounts
     console.log("Grade distribution data: " + JSON.stringify(data))
 
-    new Chart(
+    const chart = new Chart(
         document.getElementById("public-grade-distribution").getContext('2d'),
         {
             type: "bar",
@@ -93,6 +102,14 @@ var injectChart = async () => {
             }
         }
     )
+
+    function downloadChartAsPng() {
+        var downLoadPng = document.createElement('a')
+        downLoadPng.href = chart.toBase64Image()
+        var courseName = document.getElementById("attainment-details-heading").innerText
+        downLoadPng.download = `${courseName}.png`
+        downLoadPng.click()
+    }
 }
 
 // Add mutation observer to document to detect when the modal is added to dom
@@ -112,24 +129,21 @@ observer.observe(document, { childList: true, subtree: true })
 
 // JSON to CSV Converter
 function downloadJsonAsCsv(objArray) {
-    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-    var csv = '';
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray
+    var csv = ''
     for (var i = 0; i < array.length; i++) {
-        var line = '';
+        var line = ''
         for (var index in array[i]) {
             if (line != '') line += ','
-            line += array[i][index];
+            line += array[i][index]
         }
-        csv += line + '\r\n';
+        csv += line + '\r\n'
     }
 
     // Create link and download
-    var link = document.createElement('a');
-    link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csv));
+    var link = document.createElement('a')
+    link.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csv)
     var courseName = document.getElementById("attainment-details-heading").innerText
-    link.setAttribute('download', `${courseName}.csv`);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    link.download = `${courseName}.csv`
+    link.click()
 }
