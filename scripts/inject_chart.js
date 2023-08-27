@@ -53,7 +53,25 @@ var injectChart = async () => {
             options: {
                 scales: {
                     y: {
-                    beginAtZero: true
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: lang === "fi" ? "Opiskelijoiden määrä" : lang === "sv" ? "Antal studerande" : "Number of students",
+                            font: {
+                                size: 16
+                            },
+                            padding: 10
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: lang === "fi" ? "Arvosana" : lang === "sv" ? "Betyg" : "Grade",
+                            font: {
+                                size: 16
+                            },
+                            padding: 10
+                        }
                     }
                 },
                 plugins: {
