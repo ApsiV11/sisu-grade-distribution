@@ -18,6 +18,7 @@ var injectChart = async () => {
     var downloadCsvButton = document.createElement("button")
     downloadCsvButton.innerHTML = lang === "fi" ? "Lataa CSV" : lang === "sv" ? "Ladda ner CSV" : "Download CSV"
     downloadCsvButton.style.float = "right"
+    downloadCsvButton.className = "btn btn-lg btn-primary"
     downloadCsvButton.onclick = () => {
         var data = JSON.parse(document.querySelector("#__interceptedData")?.innerHTML || '{}')?.publicGradeDistribution?.gradeCounts
         var csvData = []
@@ -33,7 +34,7 @@ var injectChart = async () => {
     var downloadPngButton = document.createElement("button")
     downloadPngButton.innerHTML = lang === "fi" ? "Lataa PNG" : lang === "sv" ? "Ladda ner PNG" : "Download PNG"
     downloadPngButton.style.float = "right"
-    downloadPngButton.style.marginLeft = "10px"
+    downloadPngButton.className = "btn btn-lg btn-primary"
     downloadPngButton.onclick = () => {
         downloadChartAsPng()
     }
