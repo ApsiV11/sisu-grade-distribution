@@ -15,6 +15,22 @@ var injectChart = async () => {
     var titleText = lang === "fi" ? "Julkinen arvosanajakauma" : lang === "sv" ? "Publik betygsspridning" : "Public grade distribution"
     title.innerHTML = titleText
 
+    var downloadButton = document.createElement("button")
+    downloadButton.innerHTML = lang === "fi" ? "Lataa CSV" : lang === "sv" ? "Ladda ner CSV" : "Download CSV"
+    downloadButton.style.float = "right"
+    downloadButton.onclick = () => {
+        var data = JSON.parse(document.querySelector("#__interceptedData")?.innerHTML || '{}')?.publicGradeDistribution?.gradeCounts
+        var csvData = []
+        for(const count of Object.entries(data)) {
+            csvData.push({
+                "Grade": count[0],
+                "Count": count[1]
+            })
+        }
+        downloadJsonAsCsv(csvData)
+    }
+
+    div.appendChild(downloadButton)
     div.appendChild(title)
     div.appendChild(canvas)
 
@@ -66,3 +82,28 @@ var observer = new MutationObserver(function(mutations) {
     })
 })
 observer.observe(document, { childList: true, subtree: true })
+
+
+// JSON to CSV Converter
+function downloadJsonAsCsv(objArray) {
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var csv = '';
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        for (var index in array[i]) {
+            if (line != '') line += ','
+            line += array[i][index];
+        }
+        csv += line + '\r\n';
+    }
+
+    // Create link and download
+    var link = document.createElement('a');
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csv));
+    var courseName = document.getElementById("attainment-details-heading").innerText
+    link.setAttribute('download', `${courseName}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
