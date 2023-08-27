@@ -1,8 +1,9 @@
 {
     "manifest_version":3,
     "version":"1.4.0",
-    "name":"Sisu grade distribution",
-    "description": "An extension for showing the grade distribution for courses in Sisu",
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "default_locale": "fi",
     "content_scripts": [
       {
         "matches": [

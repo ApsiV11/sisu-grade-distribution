@@ -1,0 +1,10 @@
+{
+    "appName": {
+        "message": "Sisu grade distribution",
+        "description": "Name of the extension"
+    },
+    "appDesc": {
+        "message": "An extension for showing the grade distribution for courses in Sisu",
+        "description": "Description of the extension"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "appName": {
+        "message": "Sisu arvosanajakauma",
+        "description": "Lisäosan nimi"
+    },
+    "appDesc": {
+        "message": "Lisäosa arvosanajakauman näyttämiseen Sisussa",
+        "description": "Lisäosan kuvaus"
+    }
+}
