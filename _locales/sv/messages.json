@@ -1,0 +1,10 @@
+{
+    "appName": {
+        "message": "Sisu betygsfördelning",
+        "description": "Namn på extension"
+    },
+    "appDesc": {
+        "message": "Extension för att visa betygsfördelning i Sisu",
+        "description": "Beskrivning av extension"
+    }
+}
