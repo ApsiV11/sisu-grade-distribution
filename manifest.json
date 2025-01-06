@@ -1,33 +1,12 @@
 {
-    "manifest_version":3,
-    "version":"1.4.2",
-    "name": "__MSG_appName__",
-    "description": "__MSG_appDesc__",
-    "default_locale": "fi",
-    "content_scripts": [
-      {
-        "matches": [
-          "https://sisu.aalto.fi/*",
-          "https://sisu.helsinki.fi/*",
-          "https://sisu.hanken.fi/*",
-          "https://sisu.jyu.fi/*",
-          "https://sisu.lut.fi/*",
-          "https://sis-tuni.funidata.fi/*",
-          "https://sisu.tuni.fi/*",
-          "https://sisu.arcada.fi/*"
-        ],
-        "js": ["scripts/injectXHRMod.js"],
-        "run_at": "document_start"
-      }
-    ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "permissions": [
-      "tabs",
-      "scripting"
-    ],
-    "host_permissions": [
+  "manifest_version": 3,
+  "version": "1.4.4",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "fi",
+  "content_scripts": [
+    {
+      "matches": [
         "https://sisu.aalto.fi/*",
         "https://sisu.helsinki.fi/*",
         "https://sisu.hanken.fi/*",
@@ -36,8 +15,27 @@
         "https://sis-tuni.funidata.fi/*",
         "https://sisu.tuni.fi/*",
         "https://sisu.arcada.fi/*"
-    ],
-    "web_accessible_resources": [{
+      ],
+      "js": ["scripts/injectXHRMod.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "scripting"],
+  "host_permissions": [
+    "https://sisu.aalto.fi/*",
+    "https://sisu.helsinki.fi/*",
+    "https://sisu.hanken.fi/*",
+    "https://sisu.jyu.fi/*",
+    "https://sisu.lut.fi/*",
+    "https://sis-tuni.funidata.fi/*",
+    "https://sisu.tuni.fi/*",
+    "https://sisu.arcada.fi/*"
+  ],
+  "web_accessible_resources": [
+    {
       "resources": ["scripts/injectXHRMod.js", "scripts/interceptXHR.js"],
       "matches": [
         "https://sisu.aalto.fi/*",
@@ -49,5 +47,6 @@
         "https://sisu.tuni.fi/*",
         "https://sisu.arcada.fi/*"
       ]
-    }]
+    }
+  ]
 }
